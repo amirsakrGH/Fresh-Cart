@@ -1,0 +1,39 @@
+<section class="w-50 bg-main-light p-4 rounded my-3 mx-auto">
+  <h2>Login Now:</h2>
+
+  <form [formGroup]="loginForm" (ngSubmit)="logIn()">
+
+
+    <div class="mb-2">
+      <label for="email">email:</label>
+      <input #inputEmail formControlName="email" class="form-control"  id="email" type="email">
+      <div *ngIf="loginForm.get('email')?.errors && (loginForm.get('email')?.touched || inputEmail.value.length > 0)" class="alert alert-danger">
+        <p *ngIf="loginForm.get('email')?.getError('required') ">Email is required</p>
+        <p *ngIf="loginForm.get('email')?.getError('email') ">Email invalid</p>
+      </div>
+    </div>
+
+
+    <div class="mb-2">
+      <label for="password">password:</label>
+      <input #inputPassword formControlName="password" class="form-control"  id="password" type="password">
+      <div *ngIf="loginForm.get('password')?.errors && (loginForm.get('password')?.touched || inputPassword.value.length > 0)" class="alert alert-danger">
+        <p *ngIf="loginForm.get('password')?.getError('required') ">Password is required</p>
+        <p *ngIf="loginForm.get('password')?.getError('pattern') ">Invalid password</p>
+      </div>
+    </div>
+
+    <div class="my-3 d-flex justify-content-between align-items-center">
+      <button  class="btn-main  d-block">
+        <i *ngIf="isloading" class="fas fa-spin fa-spinner"></i>
+        Login
+      </button>
+      <a routerLink="/forgot" class="link-primary text-decoration-underline">Forgot Password</a>
+    </div>
+
+    <p *ngIf="messageError" class="alert alert-danger">{{messageError}}</p>
+
+    <hr>
+    <p class="text-center">New customer? <a routerLink="/register" class="link-primary text-decoration-underline">Start here.</a></p>
+  </form>
+</section>

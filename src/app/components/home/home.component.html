@@ -1,0 +1,72 @@
+<!-- main slider -->
+<section>
+  <div class="row g-0">
+    <div class="col-md-9">
+      <div>
+          <owl-carousel-o [options]="mainslider">
+            <ng-template carouselSlide><img height="500" class="w-100" src="./assets/images/main-slider-1.jpeg" alt=""></ng-template>
+            <ng-template carouselSlide><img height="500" class="w-100" src="./assets/images/main-slider-2.jpeg" alt=""></ng-template>
+            <ng-template carouselSlide><img height="500" class="w-100" src="./assets/images/main-slider-3.jpeg" alt=""></ng-template>
+          </owl-carousel-o>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div>
+        <img height="250" class="w-100" src="./assets/images/slide-1.jpeg" alt="">
+        <img height="250" class="w-100" src="./assets/images/slide-2.jpeg" alt="">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- categories slider -->
+<section class="my-3">
+  <h2>Popular categories</h2>
+  <owl-carousel-o [options]="customOptions">
+
+    <ng-container *ngFor="let category of categories">
+      <ng-template carouselSlide>
+        <div>
+          <img class="w-100" height="400px" [src]="category.image" [alt]="category.name">
+          <h3 class="h5">{{category.name}}</h3>
+        </div>
+      </ng-template>
+    </ng-container>
+
+  </owl-carousel-o>
+</section>
+
+<!-- search for product -->
+
+<div>
+  <input [(ngModel)]="searchWord" placeholder="search..."  type="search" class="form-control w-25 mx-auto my-3 ">
+</div>
+
+<!-- products -->
+<section>
+  <h2>Popular products</h2>
+  <div class="row g-4">
+    <div *ngFor="let product of productsArray.slice(0,12)| search:searchWord" class="col-sm-6 col-md-4 col-lg-3 col-xl-2 ">
+      <div class="product p-2">
+
+        <!-- add fav -->
+        <i *ngIf="!wishListData.includes(product._id)" (click)="addWishList(product._id)" class="fa-regular fa-heart heart"></i>
+
+        <!-- remove fav -->
+        <i *ngIf="wishListData.includes(product._id)" (click)="removeWishList(product._id)" class="fa-solid fa-heart heart"></i>
+
+        <img [routerLink]='["/details",product._id]' class="w-100 cursor-pointer" [src]="product.imageCover" [alt]="product.title">
+        <h3 class="h6">{{product.category.name }}</h3>
+        <h4 class="h6 text-main">{{product.title.split(" ").slice(0,2).join(" ")}}</h4>
+        <div class="d-flex align-items-center justify-content-between">
+          <span>{{product.price | currency:'EGP '}}</span>
+          <div>
+            <i class="fas fa-star rating-color"></i>
+            <span class="text-muted">{{product.ratingsAverage}}</span>
+          </div>
+        </div>
+        <button (click)="addCart(product._id)" class="btn-main btn w-100">Add Product</button>
+      </div>
+    </div>
+  </div>
+</section>

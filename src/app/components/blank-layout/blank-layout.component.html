@@ -1,0 +1,9 @@
+<app-nav-blank></app-nav-blank>
+
+<div class="container-fluid ">
+  <router-outlet></router-outlet>
+</div>
+
+<app-footer></app-footer>
+
+  <button (click)="goToUP()" #scrollElement [class]="flag? 'btn-up text-main bg-main-light shadow ':'btn-up text-main bg-main-light shadow d-none' "><i class="fa-solid fa-caret-up "></i></button>

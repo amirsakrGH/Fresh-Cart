@@ -1,0 +1,95 @@
+<div class="cart-wrap">
+  <div class="container">
+        <div class="row" *ngIf="cartDetails?.products ; else cartProducts">
+        <div class="col-lg-8">
+            <div class="main-heading">Shopping Cart</div>
+            <div class="table-cart">
+                    <table >
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>price</th>
+                                <th class="head">Quantity</th>
+                                <th class="head">Total</th>
+                                <th class="head">Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody >
+                            <tr class="border-bottom pb-2" *ngFor="let p of cartDetails.products">
+                                <td>
+                                  <div class="display-flex align-center">
+                                      <div class="img-product">
+                                          <img [src]='p.product?.imageCover' [alt]="p.product?.title" class="mCS_img_loaded">
+                                      </div>
+                                      <div class="name-product">
+                                          {{p.product?.title}}
+                                          <br>
+                                          <span class="text-main">{{p.product?.brand?.name}}</span>
+                                      </div>
+                                    </div>
+                                </td>
+                                <td>
+                                  <div class="price">
+                                    {{p.price}}
+                                  </div>
+                                </td>
+                                <td class="product-count text-center">
+                                    <form action="#" class="count-inlineflex">
+                                      <div (click)="updateProductQuantity(p.product._id,p.count - 1)" class="qtyminus">-</div>
+                                      <input type="text" name="quantity" [value]="p.count" class="qty">
+                                      <div (click)="updateProductQuantity(p.product._id,p.count + 1)" class="qtyplus">+</div>
+                                    </form>
+                                </td>
+                                <td class="head">
+                                    <div class="total">
+                                      {{p.price * p.count | currency:"E£"}}
+                                    </div>
+                                </td>
+                                <td class="text-center">
+                                    <a (click)="removeCartItem(p.product._id)">
+                                      <i class="trash-icon fas fa-trash text-main"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+            </div>
+            <!-- /.table-cart -->
+        </div>
+
+        <!-- --------------------------------/.col-lg-4 -->
+        <div id="" class="col-lg-4 ">
+            <div class="cart-totals">
+                <div class="d-flex justify-content-between align-items-center">
+                  <h3>Cart Totals</h3>
+                  <button (click)="clear()" class="btn btn-sm btn-outline-danger">Clear All</button>
+                </div>
+                <form action="#" method="get" accept-charset="utf-8">
+                    <table>
+                        <tbody>
+                            <tr class="total-row">
+                                <td>Total</td>
+                                <td class="price-total">{{cartDetails?.totalCartPrice | currency:"E£"}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="btn-cart-totals">
+                        <a  class="update round-black-btn" >Update Cart</a>
+                        <a [routerLink]="['/checkout',cartDetails?._id]" class="checkout round-black-btn" >Proceed to Checkout</a>
+                    </div>
+                    <!-- /.btn-cart-totals -->
+                </form>
+                <!-- /form -->
+            </div>
+            <!-- /.cart-totals -->
+        </div>
+        <!-- /.col-lg-4 -->
+    </div>
+  </div>
+</div>
+
+
+<ng-template #cartProducts>
+  <h3>Add Products To Cart... </h3>
+  <a routerLink="/products" class="link-success text-decoration-underline h5">shopping</a>
+</ng-template>
